@@ -1,6 +1,6 @@
-# Search Algorithm Dev
+# MQTT Study
 
-- 검색 알고리즘 구현 
+- MQTT 학습 프로젝트
 
 ## Package manager
 
