@@ -6,6 +6,8 @@
 
 - NPM
 
+- MQTTX (https://mqttx.app/downloads)
+
 ## Install
 
 - npm i or npm install
