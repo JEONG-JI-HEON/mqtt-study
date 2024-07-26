@@ -5,7 +5,8 @@ import Publisher from "../../components/Publisher";
 import Receiver from "../../components/Receiver";
 import Subscriber from "../../components/Subscriber";
 
-export const QosOption = createContext([]);
+import { QosOption } from "../../data/option";
+
 const qosOption = [
   {
     label: "0",
@@ -54,11 +55,22 @@ const MainPage = () => {
     }
   };
 
+  const mqttSub = (subscription) => {
+    if (client) {
+      console.log(subscription);
+    }
+  };
+  const mqttUnSub = (subscription) => {
+    if (client) {
+      console.log(subscription);
+    }
+  };
+
   return (
     <>
       <Connection connect={mqttConnect} disconnect={mqttDisconnect} connectStatus={connectStatus} />
       <QosOption.Provider value={qosOption}>
-        <Subscriber />
+        <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnSub={isSubed} />
         <Publisher />
       </QosOption.Provider>
       <Receiver />
