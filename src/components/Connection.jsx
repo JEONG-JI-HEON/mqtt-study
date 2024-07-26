@@ -32,8 +32,8 @@ const Connection = ({ connect, disconnect, connectStatus }) => {
       username,
       password,
       clean: true,
-      reconnectPeriod: 1000, // ms
-      connectTimeout: 30 * 1000, // ms
+      reconnectPeriod: 1000,
+      connectTimeout: 30 * 1000,
     };
     connect(url, options);
   };
