@@ -27,11 +27,6 @@ const MainPage = () => {
   const [payload, setPayload] = useState({});
   const [connectStatus, setConnectStatus] = useState("Connect"); // Connect, Connecting, Connected
 
-  const mqttConnect = (host, mqttOption) => {
-    setConnectStatus("Connecting");
-    setClient(mqtt.connect(host, mqttOption));
-  };
-
   useEffect(() => {
     if (client) {
       client.on("connect", () => {
@@ -41,9 +36,27 @@ const MainPage = () => {
     }
   }, [client]);
 
+  const mqttConnect = (host, mqttOption) => {
+    setConnectStatus("Connecting");
+    setClient(mqtt.connect(host, mqttOption));
+  };
+
+  const mqttDisconnect = () => {
+    if (client) {
+      try {
+        client.end(false, () => {
+          setConnectStatus("Connect");
+          console.log("연결 끊김");
+        });
+      } catch (err) {
+        console.log("연결 에러", err);
+      }
+    }
+  };
+
   return (
     <>
-      <Connection />
+      <Connection connect={mqttConnect} disconnect={mqttDisconnect} connectStatus={connectStatus} />
       <QosOption.Provider value={qosOption}>
         <Subscriber />
         <Publisher />
