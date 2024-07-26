@@ -1,8 +1,9 @@
 import mqtt from "mqtt";
 import React, { createContext, useEffect, useState } from "react";
 import Connection from "../../components/Connection";
-import Subscriber from "../../components/Subscriber";
 import Publisher from "../../components/Publisher";
+import Receiver from "../../components/Receiver";
+import Subscriber from "../../components/Subscriber";
 
 export const QosOption = createContext([]);
 const qosOption = [
@@ -47,6 +48,7 @@ const MainPage = () => {
         <Subscriber />
         <Publisher />
       </QosOption.Provider>
+      <Receiver />
     </>
   );
 };
