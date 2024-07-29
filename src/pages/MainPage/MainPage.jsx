@@ -7,6 +7,8 @@ import Subscriber from "../../components/Subscriber";
 
 import { QosOption } from "../../data/option";
 
+import styles from "./mainPage.module.scss";
+
 const qosOption = [
   {
     label: "0",
@@ -26,7 +28,7 @@ const MainPage = () => {
   const [client, setClient] = useState(null);
   const [isSubed, setIsSubed] = useState(false);
   const [payload, setPayload] = useState({});
-  const [connectStatus, setConnectStatus] = useState("Connect"); // Connect, Connecting, Connected
+  const [connectStatus, setConnectStatus] = useState("Connect"); // Connect, Connecting, Connected, Reconnecting
 
   useEffect(() => {
     if (client) {
@@ -34,12 +36,29 @@ const MainPage = () => {
         setConnectStatus("Connected");
         console.log("연결 성공");
       });
+
+      client.on("error", (err) => {
+        console.error("연결 오류: ", err);
+        client.end();
+      });
+
+      client.on("reconnect", () => {
+        setConnectStatus("Reconnecting");
+      });
+
+      client.on("message", (topic, message) => {
+        const payload = { topic, message: message.toString() };
+        setPayload(payload);
+        console.log(`received message: ${message} from topic: ${topic}`);
+      });
     }
   }, [client]);
 
   const mqttConnect = (host, mqttOption) => {
-    setConnectStatus("Connecting");
-    setClient(mqtt.connect(host, mqttOption));
+    if (!client) {
+      setConnectStatus("Connecting");
+      setClient(mqtt.connect(host, mqttOption));
+    }
   };
 
   const mqttDisconnect = () => {
@@ -48,6 +67,7 @@ const MainPage = () => {
         client.end(false, () => {
           setConnectStatus("Connect");
           console.log("연결 끊김");
+          setClient(null);
         });
       } catch (err) {
         console.log("연결 에러", err);
@@ -57,7 +77,12 @@ const MainPage = () => {
 
   const mqttSub = (subscription) => {
     if (client) {
-      console.log(subscription);
+      // console.log(subscription);
+      const { topic, qos } = subscription;
+      client.subscribe(topic, { qos }, () => {
+        console.log("구독 성공");
+        setIsSubed(true);
+      });
     }
   };
   const mqttUnSub = (subscription) => {
@@ -67,14 +92,14 @@ const MainPage = () => {
   };
 
   return (
-    <>
+    <div className={styles["main"]}>
       <Connection connect={mqttConnect} disconnect={mqttDisconnect} connectStatus={connectStatus} />
       <QosOption.Provider value={qosOption}>
         <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnSub={isSubed} />
         <Publisher />
       </QosOption.Provider>
       <Receiver />
-    </>
+    </div>
   );
 };
 

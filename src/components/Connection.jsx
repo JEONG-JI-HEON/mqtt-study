@@ -9,6 +9,7 @@ const Connection = ({ connect, disconnect, connectStatus }) => {
 
   const [form] = Form.useForm();
   const randomLet = Math.random().toString(16).substring(2, 8);
+  // const randomLet = "e71e9a"; // dev
 
   // console.log(form);
 
@@ -19,6 +20,7 @@ const Connection = ({ connect, disconnect, connectStatus }) => {
     port: 8083,
     username: "emqx_test",
     userword: "emqx_test",
+    password: "emqx_test",
   };
 
   console.log(option);
@@ -90,7 +92,7 @@ const Connection = ({ connect, disconnect, connectStatus }) => {
           </Col>
           <Col span={8}>
             <Form.Item label="Password" name="password">
-              <Input />
+              <Input type="password" />
             </Form.Item>
           </Col>
         </Row>
