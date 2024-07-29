@@ -19,16 +19,16 @@ const Connection = ({ connect, disconnect, connectStatus }) => {
     clientId: "emqx_" + randomLet,
     port: 8083,
     username: "emqx_test",
-    userword: "emqx_test",
     password: "emqx_test",
+    path: "/mqtt",
   };
 
   console.log(option);
 
   const onFinish = (values) => {
     // console.log(values);
-    const { protocol, host, clientId, port, username, password } = values;
-    const url = `${protocol}://${host}:${port}/mqtt`;
+    const { protocol, host, clientId, port, username, password, path } = values;
+    const url = `${protocol}://${host}:${port}${path}`;
     const options = {
       clientId,
       username,
@@ -85,14 +85,19 @@ const Connection = ({ connect, disconnect, connectStatus }) => {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item label="Username" name="username">
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item label="Password" name="password">
               <Input type="password" />
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item label="Path" name="path">
+              <Input />
             </Form.Item>
           </Col>
         </Row>

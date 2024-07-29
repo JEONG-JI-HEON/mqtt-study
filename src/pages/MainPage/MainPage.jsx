@@ -49,7 +49,7 @@ const MainPage = () => {
       client.on("message", (topic, message) => {
         const payload = { topic, message: message.toString() };
         setPayload(payload);
-        console.log(`received message: ${message} from topic: ${topic}`);
+        console.log(`내용: ${message}, topic: ${topic}`);
       });
     }
   }, [client]);
@@ -96,7 +96,7 @@ const MainPage = () => {
       <Connection connect={mqttConnect} disconnect={mqttDisconnect} connectStatus={connectStatus} />
       <QosOption.Provider value={qosOption}>
         <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnSub={isSubed} />
-        <Publisher />
+        <Publisher payload={payload} />
       </QosOption.Provider>
       <Receiver />
     </div>
