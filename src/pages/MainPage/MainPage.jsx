@@ -79,7 +79,11 @@ const MainPage = () => {
     if (client) {
       // console.log(subscription);
       const { topic, qos } = subscription;
-      client.subscribe(topic, { qos }, () => {
+      client.subscribe(topic, { qos }, (error) => {
+        if (error) {
+          console.log("구독 시도 중 에러", error);
+          return;
+        }
         console.log("구독 성공");
         setIsSubed(true);
       });
@@ -90,7 +94,7 @@ const MainPage = () => {
       const { topic, qos } = subscription;
       client.unsubscribe(topic, { qos }, (error) => {
         if (error) {
-          console.log("구독 해제 에러", error);
+          console.log("구독 해제 중 에러", error);
           return;
         }
         console.log("구독 해제");
