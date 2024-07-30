@@ -87,7 +87,15 @@ const MainPage = () => {
   };
   const mqttUnSub = (subscription) => {
     if (client) {
-      console.log(subscription);
+      const { topic, qos } = subscription;
+      client.unsubscribe(topic, { qos }, (error) => {
+        if (error) {
+          console.log("구독 해제 에러", error);
+          return;
+        }
+        console.log("구독 해제");
+        setIsSubed(false);
+      });
     }
   };
 
