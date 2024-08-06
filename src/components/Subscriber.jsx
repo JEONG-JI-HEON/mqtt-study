@@ -25,7 +25,7 @@ const Subscriber = ({ sub, unSub, showUnSub }) => {
   };
 
   return (
-    <Card>
+    <Card title="Subscriber">
       <Form form={form} initialValues={record} onFinish={onFinish}>
         <Row gutter={20}>
           <Col span={12}>

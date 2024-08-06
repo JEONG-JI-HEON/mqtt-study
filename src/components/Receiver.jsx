@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { Card, List } from "antd";
+import React, { useEffect, useState } from "react";
 
 const Receiver = ({ payLoad }) => {
   const [messages, setMessages] = useState([]);

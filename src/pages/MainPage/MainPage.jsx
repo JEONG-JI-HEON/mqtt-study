@@ -104,13 +104,23 @@ const MainPage = () => {
     }
   };
 
+  const mqttPublish = (context) => {
+    if (client) {
+      const { topic, qos, payload } = context;
+      console.log(payload);
+      // client.publish(topic, payload, { qos },(err)=>{
+
+      // });
+    }
+  };
+
   return (
     <div className={styles["main"]}>
       <div className={styles["left"]}>
         <Connection connect={mqttConnect} disconnect={mqttDisconnect} connectStatus={connectStatus} />
         <QosOption.Provider value={qosOption}>
           <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnSub={isSubed} />
-          <Publisher payload={payload} />
+          <Publisher publish={mqttPublish} />
         </QosOption.Provider>
       </div>
       <div className={styles["right"]}>
