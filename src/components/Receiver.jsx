@@ -18,7 +18,7 @@ const Receiver = ({ payLoad }) => {
   );
 
   return (
-    <Card title="Receiver">
+    <Card title="Receiver" className="h-full">
       <List size="small" bordered dataSource={messages} renderItem={renderListItem} />
     </Card>
   );
