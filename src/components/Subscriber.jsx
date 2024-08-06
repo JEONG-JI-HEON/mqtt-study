@@ -6,10 +6,10 @@ import { QosOption } from "../data/option";
 const Subscriber = ({ sub, unSub, showUnSub }) => {
   const [form] = Form.useForm();
   const qosOption = useContext(QosOption);
-  console.log(qosOption);
+  // console.log(qosOption);
 
   const record = {
-    topic: "test1234",
+    topic: "testTopic/react",
     qos: 0,
   };
 

@@ -89,6 +89,7 @@ const MainPage = () => {
       });
     }
   };
+
   const mqttUnSub = (subscription) => {
     if (client) {
       const { topic, qos } = subscription;
@@ -105,12 +106,16 @@ const MainPage = () => {
 
   return (
     <div className={styles["main"]}>
-      <Connection connect={mqttConnect} disconnect={mqttDisconnect} connectStatus={connectStatus} />
-      <QosOption.Provider value={qosOption}>
-        <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnSub={isSubed} />
-        <Publisher payload={payload} />
-      </QosOption.Provider>
-      <Receiver />
+      <div className={styles["left"]}>
+        <Connection connect={mqttConnect} disconnect={mqttDisconnect} connectStatus={connectStatus} />
+        <QosOption.Provider value={qosOption}>
+          <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnSub={isSubed} />
+          <Publisher payload={payload} />
+        </QosOption.Provider>
+      </div>
+      <div className={styles["right"]}>
+        <Receiver />
+      </div>
     </div>
   );
 };
