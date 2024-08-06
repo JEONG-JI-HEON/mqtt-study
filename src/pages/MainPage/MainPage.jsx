@@ -114,7 +114,7 @@ const MainPage = () => {
         </QosOption.Provider>
       </div>
       <div className={styles["right"]}>
-        <Receiver />
+        <Receiver payload={payload} />
       </div>
     </div>
   );
